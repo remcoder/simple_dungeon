@@ -1,0 +1,211 @@
+<html>
+  <!DOCTYPE html>
+<style>
+.scene {
+  perspective: 400px;
+  position: absolute;
+  left: 25%;
+  top: 25%; 
+
+  width: 200px;
+  height: 200px;
+
+  transform:  scale(2);
+  background: #000;
+  overflow: hidden;
+}
+
+.camera {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 3s linear;
+}
+
+.tile {
+  position: absolute;
+  background: #888;
+  width: 200px; height: 200px;
+  transform-style: preserve-3d; 
+  box-sizing: border-box;
+  backface-visibility: visible;
+  text-align: center;
+  font-size: 200%;
+  padding-top:40%;
+  font-weight: bold;
+}
+
+.back {
+  transform: translateZ(-200px);
+}
+
+.front {
+  transform: translateZ(0);
+}
+
+.floor {
+  transform-origin: bottom;
+  transform: rotateX(90DEG);
+}
+
+.ceiling {
+  transform-origin: top;
+  transform: rotateX(-90deg);
+}
+
+.left {
+  transform-origin: left;
+  transform: rotateY(90deg);
+}
+
+.right {
+  transform-origin: right;
+  transform: rotateY(-90deg);
+}
+
+.wall {
+  background: url("tiles/wall.png");
+}
+
+.floor {
+  background: url("tiles/floor.png");
+  background-size: 100%;
+}
+
+.cell {
+  transform-style: preserve-3d; 
+}
+
+</style>
+<body>
+  <div id="app" tabindex="0">
+  <h1>{{ title }}</h1>
+
+  <div class="scene">
+    <div class="camera " :class="{walking : walking}">
+
+      <div class="cell" v-for="(cell,index) in cells" v-if="visible(cell)"
+        :style="{transform : transform(cell) }">
+          <!-- <div class="tile back wall"></div> -->
+          <div v-if="cell.floor" class="tile floor" :style="{filter : brightness(cell) }" ></div>
+          <!-- <div v-if="cell.floor" class="tile ceiling" :style="{filter : brightness(cell) }" ></div> -->
+          <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
+          <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
+          <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
+          <div v-if="cell.wall" class="tile front wall" :style="{filter : brightness(cell) }"></div>
+      </div>
+
+    </div>
+  
+  </div>
+</div>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<!-- production version, optimized for size and speed -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+
+  <script>
+  const cellSize = 200;
+  const WALL = "#";
+  const FLOOR = ".";
+  const map = [
+'  #####.....',
+' .#..##.....',
+' #....#.....',
+' .#...#.....',
+' .#....#....',
+' .#....#....',
+' .#...#.....',
+'##...######.',
+'#..........#',
+'#..........#'];
+
+  var app = new Vue({
+  el: '#app',
+  data: {
+    title: '3d dungeon',
+    walking: false,
+    cells: processMap(map),
+    camera: {
+      position: {
+        row : 3,
+        column: 3
+      },
+      angle : 0
+    },
+  },
+  methods :  {
+    handleKeyDown(evt) {
+      var row, cell;
+      switch(evt.key) {
+        case "ArrowUp":
+          row = map[this.camera.position.row-1];
+          cell = row[this.camera.position.column];
+          console.log(row, cell);
+          if (row && cell == FLOOR)
+            this.camera.position.row--
+          break;
+        
+        case "ArrowDown": 
+          row = map[this.camera.position.row+1];
+          
+          if (row && row[this.camera.position.column] == FLOOR)
+            this.camera.position.row++
+          break;
+        
+        case "ArrowLeft":
+          if (map[this.camera.position.row][this.camera.position.column-1] == FLOOR)
+            this.camera.position.column--
+          break;
+        
+        case "ArrowRight": 
+          if (map[this.camera.position.row][this.camera.position.column+1] != WALL)
+            this.camera.position.column++
+          break;
+      }
+    },
+    brightness(cell) {
+      var pos = this.camera.position;
+      var dx = cell.rowIndex - pos.row;
+      var dy = cell.cellIndex - pos.column;
+      var d = Math.sqrt(dx*dx + dy*dy);
+      var b = Math.pow(1.3,-1-d);
+      var s = `brightness(${b})`;
+      return s;
+    },
+    transform(cell) {
+      var x = (cell.cellIndex - this.camera.position.column) ;
+      var z = (cell.rowIndex - this.camera.position.row);
+      var t= `translate3d(${x* cellSize}px, 0px, ${z* cellSize}px)`;
+      return t;
+    },
+    
+    visible(cell) {
+      return cell.rowIndex <= this.camera.position.row;
+    }
+
+  },
+  mounted() {
+    document.addEventListener('keydown', this.handleKeyDown);
+  },
+})
+
+function processMap(map) {
+  var cells = [];
+  map.forEach((r,rowIndex) => { 
+    r.split("").forEach((c,cellIndex)=>{
+      cells.push({
+        rowIndex,
+        cellIndex,
+        wall : c == "#",
+        floor : c == "."
+      })
+    })
+  });
+  return cells;
+}
+
+  </script>
+
+</body>
+</html>
