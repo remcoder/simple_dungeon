@@ -1,7 +1,9 @@
 <html>
   <!DOCTYPE html>
 <style>
-  
+* {
+  box-sizing: border-box;
+}
 body {
   background: #000;
   overflow: hidden;
@@ -82,6 +84,22 @@ h1 {
   transform-style: preserve-3d; 
 }
 
+#map {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+}
+
+.map-cell {
+  position: absolute;
+}
+
+.map-cell.wall { background-size: 100%; }
+
+.player {
+  background: blue;
+}
+
 </style>
 <body>
   <div id="app">
@@ -104,6 +122,19 @@ h1 {
     </div>
   
   </div>
+
+  <div id="map" :style="{width: mapSize, height: mapSize}">
+    <div class="map-cell" 
+      v-for="(cell,index) in cells"
+      :class="getTileType(cell)" 
+      :style="{
+        transform : mapTransform(cell), 
+        width : mapCellSize()+'px',
+        height : mapCellSize()+'px'
+      }">
+    </div>
+  </div>
+
 </div>
 <!-- development version, includes helpful console warnings -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -115,17 +146,19 @@ h1 {
   const cellSize = 200;
   const WALL = "#";
   const FLOOR = ".";
+  
   const map = [
-'  #####.....',
-' .#..##.....',
-' #....#.....',
-' .#...#.....',
-' .#....#....',
-' .#....#....',
-' .#...#.....',
+'..#####.....',
+'..#..##.....',
+'.#....#.....',
+'..#...#.....',
+'..#....#....',
+'..#....#....',
+'..#...#.....',
 '##...######.',
 '#..........#',
 '#..........#'];
+
 
   var app = new Vue({
   el: '#app',
@@ -140,6 +173,7 @@ h1 {
       },
       angle : 0
     },
+    mapSize : 200,
   },
   methods :  {
     handleKeyDown(evt) {
@@ -189,8 +223,28 @@ h1 {
     
     visible(cell) {
       return cell.rowIndex <= this.camera.position.row;
-    }
+    },
 
+    mapTransform(cell) {
+      console.log(cell.cellIndex, cell.rowIndex);
+      const size = this.mapCellSize();
+      const x = cell.cellIndex * size;
+      const y = cell.rowIndex * size;
+      const t= `translate3d(${x}px, ${y}px, 0px)`;
+      return t;
+    },
+    getTileType(cell) {
+      const pos = this.camera.position;
+      if (cell.rowIndex == pos.row && cell.cellIndex == pos.column)
+        return "player";
+      if (cell.wall)
+        return "wall";
+      return "floor";
+    },
+    mapCellSize() {
+      return this.mapSize / map.length;
+    }
+    
   },
   mounted() {
     document.addEventListener('keydown', this.handleKeyDown);
