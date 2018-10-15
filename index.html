@@ -92,6 +92,11 @@ h1 {
 
 .map-cell {
   position: absolute;
+  opacity: 0.5;
+}
+
+.map-cell.rendered {
+  opacity: 1;
 }
 
 .map-cell.wall { background-size: 100%; }
@@ -235,11 +240,16 @@ h1 {
     },
     getTileType(cell) {
       const pos = this.camera.position;
+      const classList = [];
       if (cell.rowIndex == pos.row && cell.cellIndex == pos.column)
-        return "player";
+        classList.push("player");
       if (cell.wall)
-        return "wall";
-      return "floor";
+        classList.push("wall");
+      if (cell.floor)
+        classList.push("floor");
+      if (this.visible(cell))
+        classList.push("rendered");
+      return classList
     },
     mapCellSize() {
       return this.mapSize / map.length;
