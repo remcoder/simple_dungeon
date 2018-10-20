@@ -1,0 +1,111 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  background: #000;
+  overflow: hidden;
+}
+h1 {
+  color: brown;
+  text-align: center;
+}
+.scene {
+  perspective: 200px;
+  margin: auto;
+  width: 200px;
+  height: 200px;
+
+  background: #000;
+  overflow: hidden;
+  transform-origin: top;
+  transform: scale(3);
+}
+
+.camera {
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 3s linear;
+}
+
+.tile {
+  position: absolute;
+  background: #888;
+  width: 200px; height: 200px;
+  transform-style: preserve-3d; 
+  box-sizing: border-box;
+  backface-visibility: visible;
+  text-align: center;
+  font-size: 200%;
+  padding-top:40%;
+  font-weight: bold;
+}
+
+.back {
+  transform: translateZ(-200px);
+}
+
+.front {
+  transform: translateZ(0);
+}
+
+.floor {
+  transform-origin: bottom;
+  transform: rotateX(90DEG);
+}
+
+.ceiling {
+  transform-origin: top;
+  transform: rotateX(-90deg);
+}
+
+.left {
+  transform-origin: left;
+  transform: rotateY(90deg);
+}
+
+.right {
+  transform-origin: right;
+  transform: rotateY(-90deg);
+}
+
+.wall {
+  background: url("tiles/wall.png");
+}
+
+.floor {
+  background: url("tiles/floor.png");
+  xbackground: #888;
+  background-size: 100%;
+}
+
+.cell {
+  transform-style: preserve-3d; 
+}
+
+#map {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  transform-origin: center;
+}
+
+#map2 {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+}
+
+.map-cell {
+  position: absolute;
+  opacity: 0.5;
+}
+
+.map-cell.rendered {
+  opacity: 1;
+}
+
+.map-cell.wall { background-size: 100%; }
+
+.player {
+  background: blue;
+}
