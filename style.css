@@ -82,6 +82,14 @@ h1 {
   transform-style: preserve-3d; 
 }
 
+.sprite {
+  transform: translateZ(-100px);
+  /* background: url("sprites/bull.png"); */
+  background: none;
+  image-rendering: pixelated;
+  background-position: center bottom;
+}
+
 #map {
   position: absolute;
   right: 2px;

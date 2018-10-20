@@ -20,6 +20,9 @@
           <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
+          <img v-if="cell.sprite" class="tile sprite" :style="{filter : brightness(cell) }"
+            height="100"
+            src="sprites/bull.png" />
           <div v-if="cell.wall" class="tile front wall" :style="{filter : brightness(cell) }"></div>
       </div>
 
