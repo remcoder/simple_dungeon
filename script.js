@@ -12,7 +12,7 @@ const map = [
 '..#...#.....',
 '##...######.',
 '#..........#',
-'#..........#'];
+'############'];
 
 var app = new Vue({
 el: '#app',
@@ -23,7 +23,7 @@ data: {
   cells: processMap(map),
   camera: {
     position: {
-      row : 9,
+      row : 8,
       column: 2
     },
     angle : 0

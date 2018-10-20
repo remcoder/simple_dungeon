@@ -19,6 +19,10 @@ h1 {
   overflow: hidden;
   transform-origin: top;
   transform: scale(3);
+  background-image: url("tiles/original/cellFloor0.png");
+  background-position: bottom;
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 
 .camera {
@@ -79,7 +83,7 @@ h1 {
 .floor {
   transform-origin: bottom;
   transform: translateY(-33%) rotateX(90DEG);
-  background: url("tiles/floor3.png");
+  /* background: url("tiles/floor3.png"); */
   background-size: 33.3%;
   height: 100%;
 }
