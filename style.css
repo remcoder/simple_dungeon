@@ -12,7 +12,7 @@ h1 {
 .scene {
   perspective: 200px;
   margin: auto;
-  width: 200px;
+  width: 300px;
   height: 200px;
 
   background: #000;

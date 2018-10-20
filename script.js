@@ -19,8 +19,6 @@ const map = [
 '#..........#',
 '#..........#'];
 
-
-
 var app = new Vue({
 el: '#app',
 data: {
@@ -115,9 +113,9 @@ methods :  {
 
   transform(cell) {
     var mapSize = map.length-1;
-    var dx = (cell.cellIndex + mapSize) % mapSize;
+    var dx = cell.cellIndex*cellSize + 50;
     var dz = cell.rowIndex + 0.75;
-    var t = `translate3d(${ cell.cellIndex*cellSize }px, 0px, ${ dz*cellSize }px)`;
+    var t = `translate3d(${ dx }px, 0px, ${ dz*cellSize }px)`;
     return t;
   },
   
@@ -125,7 +123,13 @@ methods :  {
     var dx = cell.rowIndex;
     var dy = cell.cellIndex;
     var d = Math.sqrt(dx*dx + dy*dy);
-    var isInFOV = (cell.cellIndex >= cell.rowIndex && -cell.cellIndex >= cell.rowIndex) || (cell.rowIndex == 0 && cell.cellIndex == 1) || (cell.rowIndex == 0 && cell.cellIndex == -1);
+    // to calc what is in view, start with a square triangle
+    // then add anything that show up
+    var isInFOV = (cell.cellIndex >= cell.rowIndex && -cell.cellIndex >= cell.rowIndex) || 
+      (cell.rowIndex == 0 && cell.cellIndex == 1) || 
+      (cell.rowIndex == 0 && cell.cellIndex == -1) || 
+      (cell.rowIndex == -1 && cell.cellIndex == 2) || 
+      (cell.rowIndex == -1 && cell.cellIndex == -2);
     const isInFront = cell.rowIndex <= 0;
     return isInFront && isInFOV && d < 10;
   },
