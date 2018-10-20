@@ -1,12 +1,7 @@
 const cellSize = 200;
 const WALL = "#";
 const FLOOR = ".";
-//   const map = [
-// '#.#.',
-// '....',
-// '#...',
-// '....',
-// ];
+const MONSTER = "M";
 const map = [
 '..#####.....',
 '..#..##.....',
@@ -37,7 +32,6 @@ data: {
 methods :  {
   handleKeyDown(evt) {
     var row, cell;
-    // console.log(evt, evt.key)
     switch(evt.key) {
       case "ArrowUp":
         this.moveInDirection(this.camera.angle);
@@ -52,9 +46,6 @@ methods :  {
           this.moveInDirection((this.camera.angle + 3) % 4 );
         else
           this.camera.angle = (this.camera.angle + 4 -1) % 4;
-        console.log(this.camera.angle)
-        // if (map[this.camera.position.row][this.camera.position.column-1] == FLOOR)
-        //   this.camera.position.column--
         break;
       
       case "ArrowRight": 
@@ -62,15 +53,11 @@ methods :  {
           this.moveInDirection((this.camera.angle + 1) % 4 );
         else
           this.camera.angle = (this.camera.angle + 1) % 4;
-        console.log(this.camera.angle)
-        // if (map[this.camera.position.row][this.camera.position.column+1] != WALL)
-        //   this.camera.position.column++
         break;
     }
   },
 
   moveInDirection(angle) {
-    console.log("move to " + angle)
     switch (angle) {
         case 0:
           this.move(0,-1)
@@ -98,34 +85,32 @@ methods :  {
       this.camera.position.row = newRow;
       this.camera.position.column = newColumn;
     }
-
-    document.title = `x:${newColumn}, y:${newRow}`;
   },
 
   brightness(cell) {
-    var dx = cell.rowIndex;
-    var dy = cell.cellIndex;
-    var d = Math.sqrt(dx*dx + dy*dy);
-    var b = Math.pow(1.3,-1-d);
-    var s = `brightness(${b})`;
+    const dx = cell.rowIndex;
+    const dy = cell.cellIndex;
+    const d = Math.sqrt(dx*dx + dy*dy);
+    const b = Math.pow(1.3,-1-d);
+    const s = `brightness(${b})`;
     return s;
   },
 
   transform(cell) {
-    var mapSize = map.length-1;
-    var dx = cell.cellIndex*cellSize + 50;
-    var dz = cell.rowIndex + 0.75;
-    var t = `translate3d(${ dx }px, 0px, ${ dz*cellSize }px)`;
+    const mapSize = map.length-1;
+    const dx = cell.cellIndex*cellSize + 50;
+    const dz = cell.rowIndex + 0.75;
+    const t = `translate3d(${ dx }px, 0px, ${ dz*cellSize }px)`;
     return t;
   },
   
   visible(cell) {
-    var dx = cell.rowIndex;
-    var dy = cell.cellIndex;
-    var d = Math.sqrt(dx*dx + dy*dy);
+    const dx = cell.rowIndex;
+    const dy = cell.cellIndex;
+    const d = Math.sqrt(dx*dx + dy*dy);
     // to calc what is in view, start with a square triangle
     // then add anything that show up
-    var isInFOV = (cell.cellIndex >= cell.rowIndex && -cell.cellIndex >= cell.rowIndex) || 
+    const isInFOV = (cell.cellIndex >= cell.rowIndex && -cell.cellIndex >= cell.rowIndex) || 
       (cell.rowIndex == 0 && cell.cellIndex == 1) || 
       (cell.rowIndex == 0 && cell.cellIndex == -1) || 
       (cell.rowIndex == -1 && cell.cellIndex == 2) || 
@@ -135,7 +120,6 @@ methods :  {
   },
 
   mapTransform(cell) {
-    // console.log(cell.cellIndex, cell.rowIndex);
     const size = this.mapCellSize();
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
@@ -147,14 +131,13 @@ methods :  {
   showOnMap(cell) {
     const x = cell.cellIndex;
     const y = cell.rowIndex;
-    var dx = cell.rowIndex;
-    var dy = cell.cellIndex;
-    var d = Math.sqrt(dx*dx + dy*dy);
+    const dx = cell.rowIndex;
+    const dy = cell.cellIndex;
+    const d = Math.sqrt(dx*dx + dy*dy);
     return d< 5;
   },
 
   getTileType(cell) {
-    const pos = this.camera.position;
     const classList = [];
     if (cell.rowIndex == 0 && cell.cellIndex == 0)
       classList.push("player");
@@ -173,7 +156,7 @@ methods :  {
 
   rotate(cells) {
     var rotated;
-    var max = map.length-1;
+    const max = map.length-1;
     return cells.map(c => {
       switch (this.camera.angle) {
         case 0: // 0 degrees
@@ -204,12 +187,11 @@ methods :  {
 
   translate(cells) {
     var rotated;
-    var max = map.length-1;
     return cells.map(c => {
       rotated = Object.assign({}, c);
       rotated.rowIndex = c.rowIndex - this.camera.position.row;
       rotated.cellIndex = c.cellIndex - this.camera.position.column;
-      return rotated
+      return rotated;
     });
   }
 },
@@ -220,17 +202,17 @@ mounted() {
 })
 
 function processMap(map) {
-var cells = [];
-map.forEach((r,rowIndex) => { 
-  r.split("").forEach((c,cellIndex)=>{
-    cells.push({
-      rowIndex,
-      cellIndex,
-      wall : c == "#",
-      floor : c == "." || c == "M",
-      sprite : c == "M"
+  var cells = [];
+  map.forEach((r,rowIndex) => { 
+    r.split("").forEach((c,cellIndex)=>{
+      cells.push({
+        rowIndex,
+        cellIndex,
+        wall : c == WALL,
+        floor : c == FLOOR || c == MONSTER,
+        sprite : c == MONSTER
+      });
     });
   });
-});
-return cells;
+  return cells;
 }
