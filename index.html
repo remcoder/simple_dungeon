@@ -6,12 +6,12 @@
   <div id="app">
   <h1>{{ title }}</h1>
 
-  <div class="scene">
+  <div class="scene" :class="{ debug : debug }">
     <div class="camera " :class="{walking : walking}">
 
       <div class="cell" v-for="(cell,index) in rotate(cells)" 
         v-if="visible(cell)"
-        :style="{transform : transform(cell) }">
+        :style="{transform : transform(cell), width: tileSize, height: tileSize }">
           <div v-if="cell.floor" 
             class="tile floor" 
             :style="{filter : brightness(cell) }" >
@@ -21,7 +21,7 @@
           <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
           <img v-if="cell.monster" class="tile monster" :style="{filter : brightness(cell) }"
-            height="100"
+            
             src="sprites/bull.png" />
           <div v-if="cell.wall" class="tile front wall" :style="{filter : brightness(cell) }"></div>
       </div>

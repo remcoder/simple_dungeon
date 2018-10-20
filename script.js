@@ -1,4 +1,4 @@
-const cellSize = 200;
+
 const WALL = "#";
 const FLOOR = ".";
 const MONSTER = "M";
@@ -17,6 +17,7 @@ const map = [
 var app = new Vue({
 el: '#app',
 data: {
+  debug: true,
   title: 'Ye Olde Dungeon',
   walking: false,
   cells: processMap(map),
@@ -27,7 +28,8 @@ data: {
     },
     angle : 0
   },
-  mapSize : 200,
+  tileSize: 300,
+  mapSize: 200
 },
 methods :  {
   handleKeyDown(evt) {
@@ -97,10 +99,10 @@ methods :  {
   },
 
   transform(cell) {
-    const mapSize = map.length-1;
-    const dx = cell.cellIndex*cellSize + 50;
-    const dz = cell.rowIndex + 0.75;
-    const t = `translate3d(${ dx }px, 0px, ${ dz*cellSize }px)`;
+    const dx = cell.cellIndex;
+    const dz = cell.rowIndex + 0.7;
+    const dy = 0;-0.4;
+    const t = `translate3d(${ dx * this.tileSize }px, ${dy * this.tileSize}px, ${ dz*this.tileSize }px)`;
     return t;
   },
   
@@ -120,7 +122,7 @@ methods :  {
   },
 
   mapTransform(cell) {
-    const size = this.mapCellSize();
+    const size = this.mapCellSize;
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
     const offset = this.mapSize/2 - size/2;
@@ -137,6 +139,10 @@ methods :  {
     return d< 5;
   },
 
+  mapCellSize() {
+    return this.mapSize / map.length;
+  },
+
   getTileType(cell) {
     const classList = [];
     if (cell.rowIndex == 0 && cell.cellIndex == 0)
@@ -150,10 +156,6 @@ methods :  {
     if (this.visible(cell))
       classList.push("rendered");
     return classList
-  },
-
-  mapCellSize() {
-    return this.mapSize / map.length;
   },
 
   rotate(cells) {
