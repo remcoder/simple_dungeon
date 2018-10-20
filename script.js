@@ -131,7 +131,7 @@ methods :  {
       (cell.rowIndex == -1 && cell.cellIndex == 2) || 
       (cell.rowIndex == -1 && cell.cellIndex == -2);
     const isInFront = cell.rowIndex <= 0;
-    return isInFront && isInFOV && d < 10;
+    return isInFront && isInFOV && d < 8;
   },
 
   mapTransform(cell) {
