@@ -22,7 +22,7 @@ const map = [
 var app = new Vue({
 el: '#app',
 data: {
-  title: 'Simple Dungeon',
+  title: 'Ye Olde Dungeon',
   walking: false,
   cells: processMap(map),
   camera: {
