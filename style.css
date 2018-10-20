@@ -33,7 +33,7 @@ h1 {
 
 .tile {
   position: absolute;
-  background: #888;
+  /* background: #888; */
   transform-style: preserve-3d; 
   box-sizing: border-box;
   backface-visibility: visible;
@@ -60,7 +60,7 @@ h1 {
 .ceiling {
   transform-origin: top;
   transform: rotateX(-90deg);
-  background: url("tiles/ceil.png");
+  /* background: url("tiles/ceil.png"); */
   height: 100%;
 }
 

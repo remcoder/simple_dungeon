@@ -93,7 +93,7 @@ methods :  {
     const dx = cell.rowIndex;
     const dy = cell.cellIndex;
     const d = Math.sqrt(dx*dx + dy*dy);
-    const b = Math.pow(1.3,-1-d);
+    const b = Math.max(0, 1.2 - 0.3 * d); //Math.pow(1.3,-1-d);
     const s = `brightness(${b})`;
     return s;
   },
