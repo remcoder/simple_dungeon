@@ -73,9 +73,8 @@ h1 {
 }
 
 .floor {
-  background: url("tiles/floor.png");
-  xbackground: #888;
-  background-size: 100%;
+  background: url("tiles/floor3.png");
+  background-size: 33.3%;
 }
 
 .cell {
