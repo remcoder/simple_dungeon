@@ -82,7 +82,7 @@ h1 {
   transform-style: preserve-3d; 
 }
 
-.sprite {
+.monster {
   transform: translateZ(-100px);
   /* background: url("sprites/bull.png"); */
   background: none;
@@ -112,7 +112,14 @@ h1 {
   opacity: 1;
 } */
 
+
 .map-cell.wall { background-size: 100%; }
+.map-cell.monster { 
+  background: url('map/skull.png'), gray;
+  background-size: 66%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 .player {
   background: blue;

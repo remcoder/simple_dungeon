@@ -143,7 +143,9 @@ methods :  {
       classList.push("player");
     if (cell.wall)
       classList.push("wall");
-    if (cell.floor)
+    if (cell.monster)
+      classList.push("monster");  
+    else if (cell.floor)
       classList.push("floor");
     if (this.visible(cell))
       classList.push("rendered");
@@ -210,7 +212,7 @@ function processMap(map) {
         cellIndex,
         wall : c == WALL,
         floor : c == FLOOR || c == MONSTER,
-        sprite : c == MONSTER
+        monster : c == MONSTER
       });
     });
   });
