@@ -9,13 +9,12 @@
   <div class="scene">
     <div class="camera " :class="{walking : walking}">
 
-      <div class="cell" v-for="(cell,index) in rotate(cells)" v-if="visible(cell)"
+      <div class="cell" v-for="(cell,index) in rotate(cells)" 
+        v-if="visible(cell)"
         :style="{transform : transform(cell) }">
-          <!-- <div class="tile back wall"></div> -->
           <div v-if="cell.floor" 
             class="tile floor" 
             :style="{filter : brightness(cell) }" >
-            {{index}}
           </div>
           <!-- <div v-if="cell.floor" class="tile ceiling" :style="{filter : brightness(cell) }" ></div> -->
           <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
@@ -30,28 +29,15 @@
   <div id="map" class="map" :style="{width: mapSize, height: mapSize}">
     <div class="map-cell" 
       v-for="(cell,index) in translate(cells)"
+      v-if="showOnMap(cell)"
       :class="getTileType(cell)" 
       :style="{
         transform : mapTransform(cell), 
         width : mapCellSize()+'px',
         height : mapCellSize()+'px'
       }">
-      <!-- {{index}} -->
     </div>
   </div>
-
-  <!-- <div id="map2" class="map" :style="{width: mapSize, height: mapSize}">
-    <div class="map-cell" 
-      v-for="(cell,index) in rotate(cells)"
-      :class="getTileType(cell)" 
-      :style="{
-        transform : mapTransform(cell), 
-        width : mapCellSize()+'px',
-        height : mapCellSize()+'px'
-      }">
-      {{index}}
-    </div>
-  </div>  -->
 
 </div>
 <!-- development version, includes helpful console warnings -->

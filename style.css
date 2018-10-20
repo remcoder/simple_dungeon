@@ -87,6 +87,7 @@ h1 {
   right: 2px;
   bottom: 2px;
   transform-origin: center;
+  background: #666;
 }
 
 #map2 {
@@ -97,12 +98,11 @@ h1 {
 
 .map-cell {
   position: absolute;
-  opacity: 0.5;
 }
 
-.map-cell.rendered {
+/* .map-cell.rendered {
   opacity: 1;
-}
+} */
 
 .map-cell.wall { background-size: 100%; }
 

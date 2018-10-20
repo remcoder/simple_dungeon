@@ -108,7 +108,7 @@ methods :  {
     var dx = cell.rowIndex;
     var dy = cell.cellIndex;
     var d = Math.sqrt(dx*dx + dy*dy);
-    var b = Math.pow(1.2,-1-d);
+    var b = Math.pow(1.3,-1-d);
     var s = `brightness(${b})`;
     return s;
   },
@@ -122,7 +122,12 @@ methods :  {
   },
   
   visible(cell) {
-    return cell.rowIndex <= 0;
+    var dx = cell.rowIndex;
+    var dy = cell.cellIndex;
+    var d = Math.sqrt(dx*dx + dy*dy);
+    var isInFOV = (cell.cellIndex >= cell.rowIndex && -cell.cellIndex >= cell.rowIndex) || (cell.rowIndex == 0 && cell.cellIndex == 1) || (cell.rowIndex == 0 && cell.cellIndex == -1);
+    const isInFront = cell.rowIndex <= 0;
+    return isInFront && isInFOV && d < 10;
   },
 
   mapTransform(cell) {
@@ -130,8 +135,18 @@ methods :  {
     const size = this.mapCellSize();
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
-    const t= `translate3d(${x}px, ${y}px, 0px)`;
+    const offset = this.mapSize/2 - size/2;
+    const t= `translate3d(${offset}px,${offset}px,0) translate3d(${x}px, ${y}px, 0px)`;
     return t;
+  },
+
+  showOnMap(cell) {
+    const x = cell.cellIndex;
+    const y = cell.rowIndex;
+    var dx = cell.rowIndex;
+    var dy = cell.cellIndex;
+    var d = Math.sqrt(dx*dx + dy*dy);
+    return d< 5;
   },
 
   getTileType(cell) {
