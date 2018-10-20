@@ -13,7 +13,7 @@ h1 {
   text-align: center;
 }
 .scene {
-  perspective: 400px;
+  perspective: 200px;
   margin: auto;
   width: 200px;
   height: 200px;
@@ -291,7 +291,7 @@ h1 {
     transform(cell) {
       var mapSize = map.length-1;
       var dx = (cell.cellIndex + mapSize) % mapSize;
-      var dz = cell.rowIndex + 0.9;
+      var dz = cell.rowIndex + 0.75;
       var t = `translate3d(${ cell.cellIndex*cellSize }px, 0px, ${ dz*cellSize }px)`;
       return t;
     },
