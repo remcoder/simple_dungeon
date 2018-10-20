@@ -194,6 +194,8 @@ h1 {
 '#..........#',
 '#..........#'];
 
+  
+
   var app = new Vue({
   el: '#app',
   data: {
@@ -202,8 +204,8 @@ h1 {
     cells: processMap(map),
     camera: {
       position: {
-        row : 1,
-        column: 0
+        row : 9,
+        column: 2
       },
       angle : 0
     },
@@ -269,18 +271,17 @@ h1 {
       const newColumn = this.camera.position.column + dx
       const cell = row[newColumn];
       
-      // if (cell == FLOOR) { 
+      if (cell == FLOOR) { 
         this.camera.position.row = newRow;
         this.camera.position.column = newColumn;
-      // }
+      }
 
       document.title = `x:${newColumn}, y:${newRow}`;
     },
 
     brightness(cell) {
-      var pos = this.camera.position;
-      var dx = cell.rowIndex - pos.row;
-      var dy = cell.cellIndex - pos.column;
+      var dx = cell.rowIndex;
+      var dy = cell.cellIndex;
       var d = Math.sqrt(dx*dx + dy*dy);
       var b = Math.pow(1.2,-1-d);
       var s = `brightness(${b})`;
