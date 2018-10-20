@@ -56,6 +56,7 @@ h1 {
 .ceiling {
   transform-origin: top;
   transform: rotateX(-90deg);
+  background: url("tiles/ceil.png");
 }
 
 .left {

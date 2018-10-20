@@ -16,7 +16,7 @@
             class="tile floor" 
             :style="{filter : brightness(cell) }" >
           </div>
-          <!-- <div v-if="cell.floor" class="tile ceiling" :style="{filter : brightness(cell) }" ></div> -->
+          <div v-if="cell.floor" class="tile ceiling" :style="{filter : brightness(cell) }" ></div>
           <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
