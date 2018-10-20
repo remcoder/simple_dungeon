@@ -17,7 +17,7 @@ const map = [
 var app = new Vue({
 el: '#app',
 data: {
-  debug: true,
+  debug: false,
   title: 'Ye Olde Dungeon',
   walking: false,
   cells: processMap(map),
