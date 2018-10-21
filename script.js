@@ -12,8 +12,8 @@ data: {
   initialCells: processMap(map),
   camera: {
     position: {
-      row : 20,
-      column: 15
+      row : 21,
+      column: 13
     },
     angle : 0
   },
