@@ -125,9 +125,16 @@ h1 {
   position: absolute;
 }
 
-.map-cell.wall { background-size: 100%; }
-.map-cell.monster { 
-  background: url('map/skull.png'), gray;
+.map-floor {
+  background: #666;
+}
+
+.map-wall { 
+  background: #aaa;
+}
+
+.map-monster { 
+  background: url('map/skull.png'), red;
   background-size: 66%;
   background-repeat: no-repeat;
   background-position: center;

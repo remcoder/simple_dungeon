@@ -122,7 +122,7 @@ methods :  {
   },
 
   mapTransform(cell) {
-    const size = this.mapCellSize;
+    const size = this.mapCellSize();
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
     const offset = this.mapSize/2 - size/2;
@@ -148,11 +148,11 @@ methods :  {
     if (cell.rowIndex == 0 && cell.cellIndex == 0)
       classList.push("player");
     if (cell.wall)
-      classList.push("wall");
+      classList.push("map-wall");
     if (cell.monster)
-      classList.push("monster");  
+      classList.push("map-monster");  
     else if (cell.floor)
-      classList.push("floor");
+      classList.push("map-floor");
     if (this.visible(cell))
       classList.push("rendered");
     return classList
