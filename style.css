@@ -138,8 +138,16 @@ h1 {
   background-size: 66%;
   background-repeat: no-repeat;
   background-position: center;
+  filter: hue-rotate(180deg)
 }
 
 .player {
   background: blue;
+  color: yellow;
 }
+
+.player::after {
+  content: "➙";
+}
+
+

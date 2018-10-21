@@ -126,7 +126,12 @@ methods :  {
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
     const offset = this.mapSize/2 - size/2;
-    const t= `translate3d(${offset}px,${offset}px,0) translate3d(${x}px, ${y}px, 0px)`;
+    var t= `translate3d(${offset}px,${offset}px,0) translate3d(${x}px, ${y}px, 0px)`;
+
+    if (cell.tileType)
+      if (cell.tileType.indexOf("player") > -1)
+          t += " " +this.rotateOnMap(-1);
+    
     return t;
   },
 
@@ -156,6 +161,10 @@ methods :  {
     if (this.visible(cell))
       classList.push("rendered");
     return classList
+  },
+
+  rotateOnMap(offsetAngle) {
+    return `rotate(${(offsetAngle+this.camera.angle) * 90}deg)`;
   },
 
   rotate(cells) {
@@ -195,6 +204,7 @@ methods :  {
       rotated = Object.assign({}, c);
       rotated.rowIndex = c.rowIndex - this.camera.position.row;
       rotated.cellIndex = c.cellIndex - this.camera.position.column;
+      rotated.tileType = this.getTileType(rotated);
       return rotated;
     });
   }

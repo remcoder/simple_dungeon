@@ -30,7 +30,7 @@
     <div class="map-cell" 
       v-for="(cell,index) in translate(cells)"
       v-if="showOnMap(cell)"
-      :class="getTileType(cell)" 
+      :class="cell.tileType" 
       :style="{
         transform : mapTransform(cell), 
         width : mapCellSize()+'px',
