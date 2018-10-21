@@ -17,9 +17,10 @@
           <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
-          <img v-if="cell.monster" class="tile monster" :style="{filter : brightness(cell) }"
-            
-            src="sprites/bull.png" />
+          <div v-if="cell.monster" class="tile monster" :style="{filter : brightness(cell) }">
+            <div v-show="cell.sprite.front" class="sprite sprite-front"></div>
+            <div v-show="cell.sprite.attack" class="sprite sprite-attack"></div>
+          </div>
           <div v-if="cell.wall" class="tile front wall" :style="{filter : brightness(cell) }"></div>
       </div>
 
@@ -46,6 +47,7 @@
 <!-- production version, optimized for size and speed -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 
+  <script src="mummy.js" ></script>
   <script src="script.js" ></script>
 
 </body>

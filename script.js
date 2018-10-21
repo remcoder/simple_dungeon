@@ -1,4 +1,4 @@
-
+const turnLengthSeconds = 1;
 const WALL = "#";
 const FLOOR = ".";
 const MONSTER = "M";
@@ -20,7 +20,7 @@ data: {
   debug: false,
   title: 'Ye Olde Dungeon',
   walking: false,
-  cells: processMap(map),
+  initialCells: processMap(map),
   camera: {
     position: {
       row : 8,
@@ -29,7 +29,33 @@ data: {
     angle : 0
   },
   tileSize: 300,
-  mapSize: 200
+  mapSize: 200,
+  turn : 0
+},
+computed: {
+  cells() { 
+    var turn = this.turn;   
+    const monsters = this.initialCells.filter(c=>c.monster);
+    console.log(monsters)
+    monsters.forEach(m=>{
+      if(Math.random() > 0.5)
+      {
+        m.sprite.front = true;
+        m.sprite.attack = false;
+      }
+      else {
+        m.sprite.front = false;
+        m.sprite.attack = true;
+      }
+      
+    })
+    return this.initialCells;
+  },
+
+  npcs() {  
+    var mummy = new Mummy();
+  }
+
 },
 methods :  {
   handleKeyDown(evt) {
@@ -207,10 +233,20 @@ methods :  {
       rotated.tileType = this.getTileType(rotated);
       return rotated;
     });
+  },
+
+  startTime() {
+    this._timer = setInterval(()=>this.nextTurn(), turnLengthSeconds * 1000);
+  },
+
+  nextTurn() {
+    this.turn++;
+    document.title = `turn #${this.turn}`;
   }
 },
 mounted() {
   this.move(0,0);
+  this.startTime();
   document.addEventListener('keydown', this.handleKeyDown);
 },
 })
@@ -224,7 +260,11 @@ function processMap(map) {
         cellIndex,
         wall : c == WALL,
         floor : c == FLOOR || c == MONSTER,
-        monster : c == MONSTER
+        monster : c == MONSTER,
+        sprite : c == MONSTER && {
+          front : false,
+          attack : true
+        }
       });
     });
   });
