@@ -2,17 +2,6 @@ const turnLengthSeconds = 1;
 const WALL = "#";
 const FLOOR = ".";
 const MONSTER = "M";
-const map = [
-'..#####.....',
-'..#..##.....',
-'.#....#.....',
-'..#.M.#.....',
-'..#....#....',
-'..#....#....',
-'..#...#.....',
-'##...######.',
-'#..........#',
-'############'];
 
 var app = new Vue({
 el: '#app',
@@ -23,8 +12,8 @@ data: {
   initialCells: processMap(map),
   camera: {
     position: {
-      row : 8,
-      column: 2
+      row : 20,
+      column: 15
     },
     angle : 0
   },
@@ -50,10 +39,6 @@ computed: {
       
     })
     return this.initialCells;
-  },
-
-  npcs() {  
-    var mummy = new Mummy();
   }
 
 },
@@ -119,7 +104,7 @@ methods :  {
     const dx = cell.rowIndex;
     const dy = cell.cellIndex;
     const d = Math.sqrt(dx*dx + dy*dy);
-    const b = Math.max(0, 1.2 - 0.3 * d); //Math.pow(1.3,-1-d);
+    const b = Math.max(0, 1.2 - 0.2 * d); //Math.pow(1.3,-1-d);
     const s = `brightness(${b})`;
     return s;
   },
@@ -148,7 +133,7 @@ methods :  {
   },
 
   mapTransform(cell) {
-    const size = this.mapCellSize();
+    const size = 20;
     const x = cell.cellIndex * size;
     const y = cell.rowIndex * size;
     const offset = this.mapSize/2 - size/2;

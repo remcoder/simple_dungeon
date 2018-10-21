@@ -33,9 +33,7 @@
       v-if="showOnMap(cell)"
       :class="cell.tileType" 
       :style="{
-        transform : mapTransform(cell), 
-        width : mapCellSize()+'px',
-        height : mapCellSize()+'px'
+        transform : mapTransform(cell)
       }">
     </div>
   </div>
@@ -47,7 +45,7 @@
 <!-- production version, optimized for size and speed -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
 
-  <script src="mummy.js" ></script>
+  <script src="map.js" ></script>
   <script src="script.js" ></script>
 
 </body>
