@@ -2,6 +2,7 @@ const turnLengthSeconds = 1;
 const WALL = "#";
 const FLOOR = ".";
 const MONSTER = "M";
+const DOOR = "D";
 
 var app = new Vue({
 el: '#app',
@@ -94,7 +95,7 @@ methods :  {
     const newColumn = this.camera.position.column + dx
     const cell = row[newColumn];
     
-    if (cell == FLOOR) { 
+    if (cell == FLOOR || cell == DOOR) { 
       this.camera.position.row = newRow;
       this.camera.position.column = newColumn;
     }
@@ -113,7 +114,9 @@ methods :  {
     const dx = cell.cellIndex;
     const dz = cell.rowIndex + 0.7;
     const dy = 0;-0.4;
-    const t = `translate3d(${ dx * this.tileSize }px, ${dy * this.tileSize}px, ${ dz*this.tileSize }px)`;
+    var t = `translate3d(${ dx * this.tileSize }px, ${dy * this.tileSize}px, ${ dz*this.tileSize }px)`;
+    // if (cell.door)
+    //     t += ` rotateY(${(-this.camera.angle) * 90}deg)`;
     return t;
   },
   
@@ -139,9 +142,11 @@ methods :  {
     const offset = this.mapSize/2 - size/2;
     var t= `translate3d(${offset}px,${offset}px,0) translate3d(${x}px, ${y}px, 0px)`;
 
-    if (cell.tileType)
+    if (cell.tileType) {
       if (cell.tileType.indexOf("player") > -1)
-          t += " " +this.rotateOnMap(-1);
+        t += " " +this.rotateOnMap(-1);
+      
+    }
     
     return t;
   },
@@ -244,7 +249,8 @@ function processMap(map) {
         rowIndex,
         cellIndex,
         wall : c == WALL,
-        floor : c == FLOOR || c == MONSTER,
+        door : c == DOOR,
+        floor : c == FLOOR || c == MONSTER || c == DOOR,
         monster : c == MONSTER,
         sprite : c == MONSTER && {
           front : false,

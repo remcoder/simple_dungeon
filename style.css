@@ -80,6 +80,16 @@ h1 {
   background-repeat: no-repeat;
 }
 
+.door {
+  background: url("tiles/doorwithwindow.png");
+  background-repeat: no-repeat;
+  /* background-size: 100% 90%;
+  background-position: center top; */
+  background-size: 100% 90%;;
+  background-position: center;
+  transform: translateY(-10px) translateZ(-100px);
+}
+
 .floor {
   transform-origin: bottom;
   transform: translateY(-33%) rotateX(90DEG);

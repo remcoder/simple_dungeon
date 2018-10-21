@@ -14,6 +14,7 @@
         :style="{transform : transform(cell), width: tileSize, height: tileSize }">
           <div v-if="cell.floor" class="tile floor" :style="{filter : brightness(cell) }" ></div>
           <div v-if="cell.floor" class="tile ceiling" :style="{filter : brightness(cell) }" ></div>
+          <div v-if="cell.door && (Math.abs(cell.cellIndex) > 0 || Math.abs(cell.rowIndex) > 0)" class="tile door" :style="{filter : brightness(cell) }" ></div>
           <div v-if="cell.wall" class="tile left wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile right wall" :style="{filter : brightness(cell) }"></div>
           <div v-if="cell.wall" class="tile back wall" :style="{filter : brightness(cell) }"></div>
