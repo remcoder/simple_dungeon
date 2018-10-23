@@ -10,7 +10,7 @@ h1 {
   text-align: center;
 }
 .scene {
-  perspective: 300px;
+  perspective: 200px;
   margin: auto;
   width: 300px; 
   height: 184px; 
@@ -170,11 +170,15 @@ h1 {
 }
 
 .map-monster { 
-  background: url('map/skull.png'), red;
+  /* background: url('map/skull.png'), red; */
   background-size: 66%;
   background-repeat: no-repeat;
   background-position: center;
   filter: hue-rotate(180deg)
+}
+
+.map-monster::after {
+  content: "M";
 }
 
 .player {
