@@ -8,7 +8,7 @@ var app = new Vue({
 el: '#app',
 data: {
   debug: false,
-  title: 'Ye Olde Dungeon',
+  title: 'ye olde dungeon',
   walking: false,
   initialCells: processMap(map),
   camera: {

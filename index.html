@@ -4,7 +4,10 @@
 
 <body>
   <div id="app">
-  <h1>{{ title }}</h1>
+  <h1><span class="char" :style="{
+    'background-position-x': (char.charCodeAt(0)-96) * -32 + 'px',
+    'background-position-y': (char.charCodeAt(0)-96) > 15 ?  -24 + 'px' : 0
+  }" v-for="char in title">{{char}}</span></h1>
 
   <div class="scene" :class="{ debug : debug }">
     <div class="camera " :class="{walking : walking}">

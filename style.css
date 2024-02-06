@@ -9,6 +9,18 @@ h1 {
   color: brown;
   text-align: center;
 }
+
+.char {
+  color:transparent;
+  background-image: url('tiles/original/fontSetRed.png');
+  margin-right: 10px;
+  width: 20px;
+  display: inline-block;
+  height: 20px;
+  /* outline: 1px solid lime; */
+
+}
+
 .scene {
   perspective: 200px;
   margin: auto;
