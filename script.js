@@ -24,7 +24,6 @@ data: {
 },
 computed: {
   cells() { 
-    var turn = this.turn;   
     const monsters = this.initialCells.filter(c=>c.monster);
     console.log(monsters)
     monsters.forEach(m=>{
@@ -45,16 +44,18 @@ computed: {
 },
 methods :  {
   handleKeyDown(evt) {
-    var row, cell;
     switch(evt.key) {
+      case 'w':
       case "ArrowUp":
         this.moveInDirection(this.camera.angle);
         break;
       
+      case 's':
       case "ArrowDown": 
         this.moveInDirection((this.camera.angle + 2) % 4 );
         break;
       
+      case 'a':
       case "ArrowLeft":
         if (evt.altKey)
           this.moveInDirection((this.camera.angle + 3) % 4 );
@@ -62,6 +63,7 @@ methods :  {
           this.camera.angle = (this.camera.angle + 4 -1) % 4;
         break;
       
+      case 'd':
       case "ArrowRight": 
         if (evt.altKey)
           this.moveInDirection((this.camera.angle + 1) % 4 );
@@ -168,15 +170,19 @@ methods :  {
     const classList = [];
     if (cell.rowIndex == 0 && cell.cellIndex == 0)
       classList.push("player");
+    
     if (cell.wall)
       classList.push("map-wall");
+    
     if (cell.monster)
       classList.push("map-monster");  
     else if (cell.floor)
       classList.push("map-floor");
+    
     if (this.visible(cell))
       classList.push("rendered");
-    return classList
+    
+   return classList
   },
 
   rotateOnMap(offsetAngle) {
@@ -252,10 +258,10 @@ function processMap(map) {
         door : c == DOOR,
         floor : c == FLOOR || c == MONSTER || c == DOOR,
         monster : c == MONSTER,
-        sprite : c == MONSTER && {
-          front : false,
+        sprite : c == MONSTER ?  {
+          front : false, 
           attack : true
-        }
+        } : undefined
       });
     });
   });
