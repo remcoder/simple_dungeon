@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+
+# added by meta .gitignore audit
+.env
+.env.*
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.log
+.idea/
+!.env.example
+!.env.sample
